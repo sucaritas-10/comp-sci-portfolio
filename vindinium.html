@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<body background="http://www.cdn-cinenode.com/movie_poster/16/full/i-robot-16202.jpg">
+<head>
+    <meta charset="UTF-8">
+    <title>Vindinium</title>
+    <style>
+
+       pre{
+           border: 2px black;
+       }
+       
+       #center{
+           text-align:center;
+       }
+       
+       
+    </style>
+    
+</head>
+<body>
+ <font color="gray"><h1 id="center">Computer science</h1></font>
+   
+  <font color="gray"> <h1>What is Vindinium? </h1></font>
+    <font color="navy blue"><p>
+       Vindinium is an Artificial Intelligence programing Also my bot will fight with others AI and establish number of turns and the bot with greatest amount of gold will win. Once a bot diedes, my bot collects the mines. If a bot diedes it lostes its mines it haded. In my code I made sure it can attack others and attack them if they are near me also if they have high health. Vindinium is all about players attacking other bots, everyone has diffrent codes for their bot so every bot does something diffrent so they can attack low health hight health. if you wanna win you need to have more gold than other players. 
+     </p> </font> 
+       
+      
+       <p>
+   </p>
+   
+   <font color="gray"><h1>This determines the enemy also the bot with the highest health, and mines </h1></font>
+    <p>this part is about my bot and how its going to attack the other bots that are enemys. Example: I put a code that makes my bot attack the other bots with the highest health. lastly it determines bots with most mines. the bot that i make actually what I wanted him to do at. One thing that was complicated  was that i try to get my bot to attcak but i keep doing something wrong until my friend hleped me out. . Im proud that i got my bot to work and thankful for my friend that was their for me because without him I wouln't of finish my bot.</p>
+    
+    <code><pre>
+        
+var Bot = require('bot');
+var PF = require('pathfinding');
+// var bot = new Bot('afa5t9q2', 'training', 'http://vindinium.org'); //Put your bot's code here and change training to Arena when you want to fight others.
+var bot = new Bot('dvh2o6v5', 'arena', 'http://52.53.211.7:9000'); //Put your bot's code here and change training to Arena when you want to fight others.
+var goDir;
+var Promise = require('bluebird');
+Bot.prototype.botBrain = function() {
+    return new Promise(function(resolve, reject) {
+        _this = bot;
+        //////* Write your bot below Here *//////
+        //////* Set `myDir` in the direction you want to go and then bot.goDir is set to myDir at the bottom *////////
+
+        /*                                      *
+         * This Code is global data!            *
+         */ 
+
+        // Set myDir to what you want and it will set bot.goDir to that direction at the end.  Unless it is "none"
+        var myDir;
+        var myPos = [bot.yourBot.pos.x, bot.yourBot.pos.y];
+
+        //This determines who is the enemy
+        var enemyBots = [];
+        if(bot.yourBot.id != 1) enemyBots.push(bot.bot1);
+        if(bot.yourBot.id != 2) enemyBots.push(bot.bot2);
+        if(bot.yourBot.id != 3) enemyBots.push(bot.bot3);
+        if(bot.yourBot.id != 4) enemyBots.push(bot.bot4);
+
+
+        // Determines the bot with the highest health 
+        var highHealth = enemyBots[0];
+            for(var i = 0; i < enemyBots.length; i++) {
+                if(highHealth.life > enemyBots[i].life) {
+                    highHealth = enemyBots[i];
+                }
+            }
+
+        // Determines the bots with most mines
+        var mostMinesBot = enemyBots[0];
+        for(var i = 0; i < enemyBots.length; i++){
+            if(mostMinesBot.mineCount < enemyBots[i].mineCount){
+                mostMinesBot = enemyBots[i];       
+            }
+        }
+
+</pre></code>
+
+
+<font color="gray"><h1> This code decides the decisions of my bot also determines the closest bot to attack as well the closest bot to get mines.</h1></font>
+<font color="red">
+<p> the code i put in this section makes my bot attack bots that are closest to me. example: if a bot is clost to me my bot will attack hes enemy that clost to me "else if(bot.findDistance(myPos, highHealth.posArray) < 4){   task = "closest bot";". In this part i made my bot do the things I wanted it to. This part was simple because i was working hard and i was listening to the techer. i had problem on my coding but I asked the techer to help me out and he showed me what i had wrong in my coding.</p>
+</font>
+
+<code><pre>
+
+        /*                                      *
+         * This Code Decides WHAT to do         *
+         *                                      */
+        var task;
+        
+        /* This determines the decision of my bots
+         * This determines the closest bot to attacks
+         * This determines the cosest bot to get mine
+         */
+        if(bot.yourBot.life < 50){
+            task = "lowHealth";
+        } 
+        else if(bot.findDistance(myPos, mostMinesBot.posArray) < 4){
+            task = "mostMinesBot"
+        }
+        else if(bot.findDistance(myPos, lowHealth.posArray) < 4){
+            task = "closest bot";
+        }
+        else{
+          task = "freemines";
+        }
+
+</pre></code>
+
+<font color="gray"><h1>This part of the code it attacks bots who have most mines also it finds the nearest freemine and sets the bot toward that direction. </h1>,</font>
+<p>this code makes my bot find the freemine that are near him and it sets myDir towards that direction. Theres more then one thing that my bot does with this coding. example 1:my bot finds closest taverns as we can see down in our code. this part my bot will do the things that i will ask him to do, this took me some time for it to work but at the end i made it happen. When I was struggling I quit hahah but i kept going and trying but at the end i need help so i asked for some one of my friends helped me out. I pushing my self to get that bot to do what i wanted it to do. this part was complicated because it had more than one code and didnt know what to do until I asked.</p>
+
+<code><pre>
+
+        /*                                      *
+         * This Code Determines HOW to do it    *
+         *                                      */
+         
+        // attacks bots that are closest
+        if(task ==="closest bot") {
+            console.log("Im going to atack you");
+            myDir = bot.findPath(myPos, lowHealth.posArray);
+        }
+        
+        // This attacks bots with most mines
+        if(task ==="mostMinesBot") {
+            console.log("your going down");
+            myDir = bot. findDistance(myPos, mostMinesBot.posArray);
+        } 
+
+
+        // This Code find the nearest freemine and sets myDir toward that direction //
+        if(task === "freemines") {
+            var closestMine = bot.freeMines[0];
+            for(var i = 0; i < bot.freeMines.length; i++) {
+                if(bot.findDistance(myPos, closestMine) > bot.findDistance(myPos, bot.freeMines[i])) {
+                    closestMine = bot.freeMines[i];
+                }
+            }
+            console.log("Claiming a Free Mine!");
+            myDir = bot.findPath(myPos, closestMine);
+        }
+
+        // This code finds free lowHealth and gets the closest taverns //
+        if(task ==="lowHealth") {
+            var closestTaverns = bot.taverns[0];
+            for(var i = 0; i < bot.taverns.length; i++) {
+                if(bot.findDistance((myPos, closestTaverns) > bot.findDistance(myPos, bot.taverns[i]))) {
+                    closestTaverns = bot.taverns[i];
+                }
+
+            }
+                console.log("Claiming a Free lowHealth!");
+                myDir = bot.findPath(myPos, closestTaverns);
+        }
+</pre></code> 
+<font color="gray"><h1> This Code Sets the direction based on what i put it. If the bot is trying to go to a place that the bot can't reach, it will just move randomly.</h1></font>
+<p>the last part of my code it will sets the direction based on where i put it. as well if theres a situation where my bot cant reach the bot will just go randomly so where ever he wants. so my bot has really good things that it can do. In this part of my coding my bot did just the right thing I wanted him to do. This part was pice of cake because I asked for help when i needed it and my friend helped me right away when i asked him. im glad my frinds were they when i needed them the most.</p>
+
+
+<code><pre>
+        /*                                                                                                                              *
+         * This Code Sets your direction based on myDir.  If you are trying to go to a place that you can't reach, you move randomly.   *
+         * Otherwise you move in the direction set by your code.  Feel free to change this code if you want.                            */
+        if(myDir === "none") {
+            console.log("Going Random!");
+            var rand = Math.floor(Math.random() * 4);
+            var dirs = ["north", "south", "east", "west"];
+            bot.goDir = dirs[rand];
+        } else {
+            bot.goDir = myDir;
+        }
+
+
+
+        ///////////* DON'T REMOVE ANTYTHING BELOW THIS LINE *//////////////
+        resolve();
+    });
+}
+bot.runGame();
+
+        
+    </pre></code>
+    
+<font color="gray"><h1> Stuff I Learned</h1></font>    
+    <p> During this project, I learned how to created mine bot and also on how to make it attacked other bots with the coded I work on . I learn how to make my bot attacked other bots that were close to him also how i give him the power to attcat bots with high health. I also learn how to work a code when my teacher gaved me an example on how it was done and it was so much easier for me.  </p>
+    
+</body>
+</html
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </body>
+</html>
